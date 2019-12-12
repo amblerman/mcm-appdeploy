@@ -1,0 +1,33 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+    dev-ready: approved
+  name: ajm-nginxfixed
+  namespace: ajm
+spec:
+  template:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: nginx
+      name: ajm-nginx
+      namespace: default
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - image: twalter/openshift-nginx:stable
+            name: nginx
+            ports:
+            - containerPort: 8081
+

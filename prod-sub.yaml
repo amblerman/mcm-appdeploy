@@ -1,0 +1,13 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  name: acmeproj-prod-sub
+  namespace: acmeproj
+spec:
+  channel: acmeproj/acmeproj-prod
+  packageFilter:
+    annotations:
+      prod-ready: approved
+  placement:
+    clusters:
+    - name: kevancluster

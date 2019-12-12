@@ -1,0 +1,13 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Channel
+metadata:
+  name: acmeproj-dev
+  namespace: acmeproj
+spec:
+  sourceNamespaces: 
+  - acmeproj
+  type: Namespace
+  pathname: acmeproj
+  gates:
+    annotations:
+      dev-ready: approved
