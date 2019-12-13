@@ -1,0 +1,16 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  name: acmeproj-dev-sub
+  namespace: acmeproj
+  labels:
+    release: acme101
+    app: acme-app
+spec:
+  channel: acmeproj/acmeproj-dev
+  packageFilter: 
+    annotations:
+      dev-ready: approved
+  placement:
+    clusters:
+    - name: lancelcluster
