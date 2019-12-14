@@ -365,26 +365,29 @@ You can also see this in the topology diagram of the application.
 Click on Layercake menu->Applications->acme-app
 
 The diagram now looks like the following. This now shows three nodes with the 3rd node being the actual deployment object.
+
 ![alt text](screenshots/topology-deploy.png "topology deployable")
 
 
 Above the topology diagram, click on the resources tab
 ![alt text](screenshots/resource-tab.png "resource tab")
 
-Click on the subscriptions box
+
+Under Resource highlights, click on the subscriptions box
+
 ![alt text](screenshots/subscriptions.png "subscriptions")
 
 Notice there is one related deployment (not deployable)
 This is the deployment that is now running on the development cluster
 
-![alt text](screenshots/search-deploy.png "deployment")
+![alt text](screenshots/related-resources.png "deployment")
 
 Click on the deployment box.
 This will show the related deployment(s) at the bottom and should look like the following:
 
 ![alt text](screenshots/related-deployment.png "related deployment")
 
-This shows us the name of teh deployment, the cluster it's running on and the number and state of deployment itself.
+This shows us the name of the deployment, the cluster it's running on and the number and state of deployment itself.
 
 
 A similar exercise could be done by changing the value of the prod-ready attribute to approved. This will trigger a deployment to the production cluster.
