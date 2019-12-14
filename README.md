@@ -273,7 +273,7 @@ acme-app   1d
 ```
 
 you can also see this in MCM. Log in to MCM, and from the layer cake menu, select Applications.
-![alt text](screenshots/layercake.pnr "layercake menu - application")
+![alt text](screenshots/layercake.png "layercake menu - application")
 ![alt text](screenshots/application-menu.png "layercake menu - application")
 ![alt text](screenshots/application.png "layercake menu - application")
 
