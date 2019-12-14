@@ -252,6 +252,31 @@ acmeproj-dev-sub    Propagated   1d
 acmeproj-prod-sub   Propagated   1d
 ```
 
+5) Create the Application
+
+The application is defined in acmeapp.yaml. 
+
+Create it by typing:
+```
+kubectl create -f acmeapp.yaml
+```
+
+Verify it gets created in two ways:
+```
+kubectl get application -n acmproj
+```
+
+This should return
+```
+NAME       AGE
+acme-app   1d
+```
+
+you can also see this in MCM. Log in to MCM, and from the layer cake menu, select Applications.
+![alt text](screenshots/layercake.pnr "layercake menu - application")
+![alt text](screenshots/application-menu.png "layercake menu - application")
+![alt text](screenshots/application.png "layercake menu - application")
+
 
 ## Acknowledgments
 
