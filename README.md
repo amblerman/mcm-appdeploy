@@ -3,7 +3,7 @@
 # Application promotion model with multiple clusters
 
 This project looks at  the application deployment and promotion model within IBM Multi Cluster Manager (MCM).
-This project explores the how Applications, Channels, Subscriptions and Deployables can be used to manage and promote appications across multiple clusters.
+This project takes a look at how the Applications, Channels, Subscriptions and Deployables can be used to manage and promote appications across multiple clusters.
 
 # Technology used in this project
 
@@ -46,6 +46,25 @@ Once a subscription identifies the proper deployables that match the given crite
 The relationship of these objects is illustrated in the following diagram:
 
 ![alt text](screenshots/application-model.png "MCM Application Model Diagram")
+
+# How the Applicaiton model in MCM works.
+In this project, two clusters, an Application, two channels, two subscriptions and one deployable were created.
+This was the minimum number of resources needed to illustrate how the application model in Multi Cloud Manager works and be able to deploy to more than one cluster..
+
+Clusters:
+The two target clusters were OKD clusters and were both managed by the MCM hub cluster. The configuration of the two target cluster was irrelevant to this exercise. 
+The clusters were identified both by name and purpose.
+
+Cluster Name:      Purpose:
+lancel             development cluster
+kevan              production cluster
+
+This was a simple example where we will be choosing the placement of our deployments by clustername.
+More advanced cluster selection techniques are possible through the use placement rules.  
+Placement rules are discussed here: https://www.ibm.com/support/knowledgecenter/SSFC4F_1.1.0/mcm/applications/managing_placement_rules.html
+
+
+The files in question are:
 
 
 ## Acknowledgments
