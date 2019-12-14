@@ -120,7 +120,7 @@ spec:
 
 ```
 
-In the above example, we see that the subscription will be looking at the acmeproj/acmeproj-dev channel. This is of the form <namespace>/<channel name>.
+In the above example, we see that the subscription will be looking at the acmeproj/acmeproj-dev channel. This is of the form "<namespace>/<channel name>".
 This subscription will also be looking for packages (deployables) that carry the annotation of dev-ready = approved. This is an indication that the given deployable is 
 approved for moving to a development cluster.
 
