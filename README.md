@@ -120,12 +120,40 @@ spec:
 
 ```
 
-In the above example, we see that the subscription will be looking at the acmeproj/acmeproj-dev channel. This is of the form &ltnamespace&gt/&ltchannel name&gt;.
+In the above example, we see that the subscription will be looking at the acmeproj/acmeproj-dev channel. This is of the form &lt;namespace&gt;/&lt;channel name&gt;.
 This subscription will also be looking for packages (deployables) that carry the annotation of dev-ready = approved. This is an indication that the given deployable is 
 approved for moving to a development cluster.
 
 Finally, the placement rules used is merely a simple rule by targeting a particular cluster by name. In this case 'lancelcluster' is our development cluster.
 
+If we look at the development channel yaml file, we see this:
+```
+apiVersion: app.ibm.com/v1alpha1
+kind: Channel
+metadata:
+  name: acmeproj-dev
+  namespace: acmeproj
+  labels:
+    app: acme-app
+    release: acme101
+spec:
+  sourceNamespaces: 
+  - acmeproj
+  type: Namespace
+  pathname: acmeproj
+  gates:
+    annotations:
+      dev-ready: approved
+```
+
+Channels can look at three different sources for the resources to deploy: Helm repository, namespaces or object stores.
+As the type field under the spec: section dictates, we are using a Namespace type channel for this example.
+This tells the channel to look in the namespaces listed under the sourceNamesapce block for finding potential deployable artifacts.
+In this example, that means any resource in the "acmeproj" namespace could be a potential candidate for this channel to pick as a deployable resource.
+
+However, futher filtering is done throught the gates: block in the channel spec:. Here we see that a gate: is defined thta is looking for resources that have the dev-ready: approved annotation set. 
+
+This channel will pick only deployable resources that are in the acmeproj namespace that have the dev-ready: approved annotation.
 
 
 
