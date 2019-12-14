@@ -277,6 +277,12 @@ you can also see this in MCM. Log in to MCM, and from the layer cake menu, selec
 ![alt text](screenshots/application-menu.png "layercake menu - application")
 ![alt text](screenshots/application.png "layercake menu - application")
 
+If everything went well, you should see one deployable associated with this application. This does not mean that anything was deployed to the target clusters yet.
+Seeing one deployable associated with the application only means a deployable resource was found that matched all the criteria required to be associated with the application.
+
+Click on the application link for acme-app. This should show a picture similar to the below
+![alt text](screenshots/app-topology "application topology")
+
 
 ## Acknowledgments
 
