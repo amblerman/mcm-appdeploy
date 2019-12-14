@@ -5,6 +5,11 @@
 This project looks at  the application deployment and promotion model within IBM Multi Cluster Manager (MCM).
 This project takes a look at how the Applications, Channels, Subscriptions and Deployables can be used to manage and promote appications across multiple clusters.
 
+The resources defined below are done so in the context of a ficticious application called "acmeapp".
+All the resources use "acme" in their names, namespaces, and other metadata as a way to identify the resource belonging to the acme application.
+The applicaiton is completely ficticous and really is just using a standard nginx container as the deployable asset. 
+The purpose of this exercise is to illustrate the application model in MCM as opposed to any functionality of the deployed application. Any application could be used for this pupose.
+
 # Technology used in this project
 
 * IBM Multi Cloud Manager: https://www.ibm.com/cloud/multicloud-manager
@@ -84,6 +89,45 @@ spec:
 status: {}
 
 ```
+
+In the above example, the application will be composed any subscription resource that happens to have the label of "acme101".
+This allows MCM to identify which resources could make up the application.
+
+
+Subcription. 
+The development and production subscription are defined in the dev-sub.yaml and prod-sub.yaml files respectively. The only significant differences in the definitions will be the package filter 
+annotationed used to identify potential resoruces and the target cluster for the placement.
+
+Below the development subscription is shown.  
+
+```
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  name: acmeproj-dev-sub
+  namespace: acmeproj
+  labels:
+    release: acme101
+    app: acme-app
+spec:
+  channel: acmeproj/acmeproj-dev
+  packageFilter: 
+    annotations:
+      dev-ready: approved
+  placement:
+    clusters:
+    - name: lancelcluster
+
+```
+
+In the above example, we see that the subscription will be looking at the acmeproj/acmeproj-dev channel. This is of the form <namespace>/<channel name>.
+This subscription will also be looking for packages (deployables) that carry the annotation of dev-ready = approved. This is an indication that the given deployable is 
+approved for moving to a development cluster.
+
+Finally, the placement rules used is merely a simple rule by targeting a particular cluster by name. In this case 'lancelcluster' is our development cluster.
+
+
+
 
                            
 
