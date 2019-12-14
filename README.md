@@ -64,8 +64,28 @@ More advanced cluster selection techniques are possible through the use placemen
 Placement rules are discussed here: https://www.ibm.com/support/knowledgecenter/SSFC4F_1.1.0/mcm/applications/managing_placement_rules.html
 
 
-The files in question are:
+Application:
+The application is defined through the file named acmeapp.yaml.
+```
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: acme-app
+  namespace: acmeproj
+  labels: 
+    app: acme-app
+spec:
+  componentKinds:
+  - group: app.ibm.com
+    kind: Subscription
+  selector:
+    matchLabels:
+      release: acme101
+status: {}
 
+```
+
+                           
 
 ## Acknowledgments
 
