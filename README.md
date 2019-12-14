@@ -283,6 +283,143 @@ Seeing one deployable associated with the application only means a deployable re
 Click on the application link for acme-app. This should show a picture similar to the below
 ![alt text](screenshots/app-topology.png "application topology")
 
+This shows the topology for this application. In this case we are shown the two subscriptions on the left (acmeproj-dev and acmeproj-prod). 
+
+6) deploy app to the dev cluster
+
+Before deploying the application, log into your development target cluster and verify there are no deployments in the acmeproj namespace.
+* Note: this was done from a shell that is configured to point to the dev clutster and not the MCM hub cluster
+
+```
+kubectl get nodes
+
+NAME                          STATUS   ROLES                  AGE   VERSION
+lancel.nip.io   Ready    compute,infra,master   72d   v1.11.0+d4cacc0
+```
+
+Above shows that we are running this command on lacel, our dev cluster.
+
+```
+kubectl get deployment -n acmeproj
+
+No resources found in acmeproj namespace.
+
+```
+Since no resources of type deployment were found in the acmeproj namespace on our dev cluster, we know our application has not been deployed there yet.
+
+As a reminder, only deployables that have a an attribute of "dev-ready: approved" will be picked up by our subscription and deployed.
+
+To trigger a deployment, edit the deployable and change the value of the deployable. We will edit this in the MCM GUI but it could be done as part of a CICD pipeline by the build tool as well. 
+
+Layercake menu-> Search. Type kind: deployable.
+In the list locate "acme-nginxfixed
+![alt text](screenshots/deployable.png "deployable")
+*Note: there will be other deployables that start with "acme". Those were created by the subscriptions but we need to change the original deployable so that it's picked up by the subscription.
+
+Click on the acme-nginxfixed deployable
+
+This will bring up the yaml definition for the deployable. The begining of the yaml defintion should look similar to the following.
+```
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: 'false'
+    app.ibm.com/managed-cluster: /
+    dev-ready: notapproved
+    prod-ready: notapproved
+```
+
+
+Click the edit botton to the right of the page.
+
+change "notapproved" to "approved" (i.e. remove "not") from the dev-ready line under the annotations block.
+Click the save button. You will get a warning that saving the edited yaml file could affect the behavior of running applications. Click save button in the 
+in the warning dialog.
+
+
+After editing, the values for the attributes should read as below. This should trigger a deployment to the dev cluster.
+```
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: 'false'
+    app.ibm.com/managed-cluster: /
+    dev-ready: approved
+    prod-ready: notapproved
+```
+
+Wait a bit of time (seconds or mins). In the command shell configured to your development cluster, type:
+```
+kubectl get deployment -n acmeproj
+
+NAME         DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+acme-nginx   1         1         1            1           1m
+
+```
+
+If you see the output above, this shows that the deployment has been triggered by MCM through changing of the attribute in the deployable yaml defintion.
+
+You can also see this in the topology diagram of the application.
+Click on Layercake menu->Applications->acme-app
+
+The diagram now looks like the following. This now shows three nodes with the 3rd node being the actual deployment object.
+![alt text](screenshots/topology-deploy.png "topology deployable")
+
+
+Above the topology diagram, click on the resources tab
+![alt text](screenshots/resource-tab.png "resource tab")
+
+Click on the subscriptions box
+![alt text](screenshots/subscriptions.png "subscriptions")
+
+Notice there is one related deployment (not deployable)
+This is the deployment that is now running on the development cluster
+
+![alt text](screenshots/search-deploy.png "deployment")
+
+Click on the deployment box.
+This will show the related deployment(s) at the bottom and should look like the following:
+
+![alt text](screenshots/related-deployment.png "related deployment")
+
+This shows us the name of teh deployment, the cluster it's running on and the number and state of deployment itself.
+
+
+A similar exercise could be done by changing the value of the prod-ready attribute to approved. This will trigger a deployment to the production cluster.
+
+# Remove application
+
+Edit the deployable yaml definition again.
+
+Layercake menu-> Search. Type kind: deployable.
+In the list locate "acme-nginxfixed
+![alt text](screenshots/deployable.png "deployable")
+*Note: there will be other deployables that start with "acme". Those were created by the subscriptions but we need to change the original deployable so that it's picked up by the subscript>
+
+Click on the acme-nginxfixed deployable
+
+
+This will bring up the yaml definition for the deployable.
+Click the edit button to the right. change the value of dev-ready: approved to dev-ready: notapproved  (or anything except "approved")
+Click save.
+
+the yaml definition should look like:
+
+```
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: 'false'
+    app.ibm.com/managed-cluster: /
+    dev-ready: notapproved
+    prod-ready: notapproved
+```
+
+
+
 
 ## Acknowledgments
 
