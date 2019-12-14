@@ -197,10 +197,63 @@ These will be used to illustrate how these can be used to control when these dep
 To illustrate how you can deploy and promote applications in MCM, you can do the following. Verify you have met the requirements in the prerequisties section above
 
 1) Create the acmeproj name space
-``` kubectl create namespaec acmeproj ```
+``` kubectl create namespace acmeproj ```
+
+2) create the two MCM channels
+```
+kubectl create -f dev-chan.yaml
+kubectl create -f prod-chan.yaml
+```
+
+Verify these were created
+
+```
+kubectl get channel -n acmeproj
+
+NAME            TYPE        PATHNAME   AGE
+acmeproj-dev    Namespace   acmeproj   1d
+acmeproj-prod   Namespace   acmeproj   1d
+
+```
+3) Create Deployable
+
+```
+kubectl create -f nginx-deployable.yaml
+```
+
+If you log onto MCM, you can run a search with kind: deployable to see this has been created. For unknown reasons this cannot verified at command line.
+
+![alt text](screenshots/search-deploy.png "search for deployable")
+
+Result
+![alt text](screenshots/deployable.png "deployable")
+
+Note the labels listed on the deployable on the far right. These are used by the application, channel and subscription to help identify this deployable should be picked up.
+
+
+
+4) Create subscriptions
+
+** note: before running these commands, change the cluster names in both dev-sub.yaml and prod-sub.yaml to match the names of your actual target clusters.
+
+
+``` 
+kubectl create -f dev-sub.yaml
+kubectl create -f prod-sub.yaml
+```
+
+Verify the subscriptions were created.
+```
+kubectl get subscription -n acmeproj
+
+
+NAME                STATUS       AGE
+acmeproj-dev-sub    Propagated   1d
+acmeproj-prod-sub   Propagated   1d
+```
+
 
 ## Acknowledgments
 
 * Developed by Andy Moynahan, Paul Lucas, Dave Wakeman and Christina Churchill
 * Thank you to our K8s enablement leaders!
-
