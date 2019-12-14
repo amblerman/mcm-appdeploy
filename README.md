@@ -10,6 +10,8 @@ All the resources use "acme" in their names, namespaces, and other metadata as a
 The applicaiton is completely ficticous and really is just using a standard nginx container as the deployable asset. 
 The purpose of this exercise is to illustrate the application model in MCM as opposed to any functionality of the deployed application. Any application could be used for this pupose.
 
+Although this example will initiate deployments by manually changing values in a yaml file, this could be done as part of a CICD process in an automated fashion by editing the Kubernetes resource.
+
 # Technology used in this project
 
 * IBM Multi Cloud Manager: https://www.ibm.com/cloud/multicloud-manager
@@ -20,6 +22,16 @@ For this project, a MCM hub cluster was used that managed two OKD clusters. http
 The MCM cluster served solely as a management hub cluster. The two OKD clusters servered as the potential deployment targets.
 For the purposes of this project, one of the OKD clusters was considered a Dev cluster and the other a Production level cluster.
 
+# Prerequisits
+
+If you want to use this as an example, make sure you have the following in place.
+
+1) IBM Multi Cloud Manager Installed
+2) At least two target clusters. This example uses OKD clusters but tis example should work with any Kubernetes cluster that is supported by IBM MCM
+3) ability to clone a git repository
+4) The proper CLI tools installed (kubectl, git, etc)
+5) your kubectl is configured to point to your MCM hub cluster
+ 
 # Concepts
 
 The application deployment model employed by MCM is that of using a combination of Applications, Subscriptions, Channels and Deployable objects to manage
@@ -156,8 +168,36 @@ However, futher filtering is done throught the gates: block in the channel spec:
 This channel will pick only deployable resources that are in the acmeproj namespace that have the dev-ready: approved annotation.
 
 
+Deployable
 
-                           
+The deployable used in this exercise is defined in the file nginx-deployable.yaml. 
+Only part of that file is reproduced here. Please refer to the file itself for the full resource definition.
+The parts of this definition show that it references an nginix image as the deployable asset.
+
+```
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+    dev-ready: notapproved
+    prod-ready: notapproved
+  name: acme-nginxfixed
+  namespace: acmeproj
+  labels:
+    release: acme101
+    app: acme-app
+```
+
+The interesting things to note in this Deployable definition are the annotations. In particular, the dev-ready and prod-ready keys and their values.
+These will be used to illustrate how these can be used to control when these deployable resources get deployed to a cluster.
+
+# Working Example.
+
+To illustrate how you can deploy and promote applications in MCM, you can do the following. Verify you have met the requirements in the prerequisties section above
+
+1) Create the acmeproj name space
+``` kubectl create namespaec acmeproj ```
 
 ## Acknowledgments
 
