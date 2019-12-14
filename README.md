@@ -281,7 +281,7 @@ If everything went well, you should see one deployable associated with this appl
 Seeing one deployable associated with the application only means a deployable resource was found that matched all the criteria required to be associated with the application.
 
 Click on the application link for acme-app. This should show a picture similar to the below
-![alt text](screenshots/app-topology "application topology")
+![alt text](screenshots/app-topology.png "application topology")
 
 
 ## Acknowledgments
