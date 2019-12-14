@@ -44,7 +44,7 @@ Subscriptions also can define placement rules as to where the deployables can be
 Once a subscription identifies the proper deployables that match the given criteria, they can be deployed to the target clusters.
  
 The relationship of these objects is illustrated in the following diagram:
-![alt text] (screenshots/application-model.png "Application Model Diagram")
+![alt text] (screenshots/application-model.png "MCM Application Model Diagram")
 
 
 ## Acknowledgments
