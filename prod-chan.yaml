@@ -3,6 +3,9 @@ kind: Channel
 metadata:
   name: acmeproj-prod
   namespace: acmeproj
+  labels:
+    app: acme-app
+    release: acme101
 spec:
   sourceNamespaces: 
   - acmeproj

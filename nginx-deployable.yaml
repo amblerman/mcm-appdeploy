@@ -3,9 +3,13 @@ kind: Deployable
 metadata:
   annotations:
     app.ibm.com/is-local-deployable: "false"
-    dev-ready: approved
-  name: ajm-nginxfixed
-  namespace: ajm
+    dev-ready: notapproved
+    prod-ready: notapproved
+  name: acme-nginxfixed
+  namespace: acmeproj
+  labels:
+    release: acme101
+    app: acme-app
 spec:
   template:
     apiVersion: apps/v1
@@ -13,7 +17,7 @@ spec:
     metadata:
       labels:
         app: nginx
-      name: ajm-nginx
+      name: acme-nginx
       namespace: default
     spec:
       replicas: 1

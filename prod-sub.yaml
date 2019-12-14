@@ -3,6 +3,9 @@ kind: Subscription
 metadata:
   name: acmeproj-prod-sub
   namespace: acmeproj
+  labels:
+    release: acme101
+    app: acme-app
 spec:
   channel: acmeproj/acmeproj-prod
   packageFilter:
