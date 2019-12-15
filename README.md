@@ -421,7 +421,35 @@ metadata:
     prod-ready: notapproved
 ```
 
+Click save and also in the warning dialog.
 
+This will mark our deployable as no longer suitable for deployment to our development cluster.
+
+Wait a few seconds or minutes.
+
+In the command shell configured to your development cluster, run:
+
+```
+kubectl get deployment -n acme-proj
+```
+
+You should get the output of:
+```
+No resources found in acmeproj namespace.
+```
+
+Note: if you still see a deployment, wait a bit longer.
+Because our deployable now carries the annotation of dev-ready: notapproved, MCM will remove the deployment from our dev cluster.
+
+We can see this in MCM as well.
+Our application topology now looks like this:
+![alt text](screenshots/app-topology.png "application topology")
+
+Note that it only shows two nodes as the deployment was removed.
+
+If you click on the resources tab for the application, we now see the following for the related resources:
+
+![alt text](screenshots/resources-nodeploy.png "no deploy")
 
 
 ## Acknowledgments
