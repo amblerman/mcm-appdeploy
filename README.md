@@ -449,7 +449,7 @@ Note that it only shows two nodes as the deployment was removed.
 
 If you click on the resources tab for the application, we now see the following for the related resources:
 
-![alt text](screenshots/resources-nodeploy.png "no deploy")
+![alt text](screenshots/resource-nodeploy.png "no deploy")
 
 
 ## Acknowledgments
